@@ -1,4 +1,5 @@
 import argparse
+import json
 import requests
 
 
@@ -44,6 +45,17 @@ def main():
     }
 
     del args['total_duration']
+
+    if 'tolerance_window' in args.keys():
+        request_params['tolerance_window'] = args['tolerance_window']
+        del args['tolerance_window']
+
+    if 'include_tracks_at' in args.keys():
+        tracks_to_include_path = args['include_tracks_at']
+        del args['include_tracks_at']
+
+        with open(tracks_to_include_path, 'r') as tracks_file:
+            request_params['tracks_to_include'] = json.load(tracks_file)
 
     for key in args.keys():
         new_key = key.replace('-', '_')
@@ -110,7 +122,23 @@ def initialise_parser():
     parser.add_argument(
         '--total-duration',
         help='The length of the playlist you would like to generate.',
-        type=int
+        type=int,
+    )
+    parser.add_argument(
+        '--include-tracks-at',
+        help=(
+            'Path to a JSON file contain tracks you would like to be included.'
+        ),
+        required=False,
+    )
+    parser.add_argument(
+        '--tolerance-window',
+        help=(
+            'Stringency for how close the playlist dureation should be tp the '
+            'specified time limit (does not guarantee stringency).'
+        ),
+        required=False,
+        type=int,
     )
 
     return parser
