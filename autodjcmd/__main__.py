@@ -109,7 +109,7 @@ def initialise_parser():
         required=False,
     )
     parser.add_argument(
-        '--track-number',
+        '--position',
         help='Search for tracks with the same track number.',
         required=False,
     )
@@ -127,14 +127,15 @@ def initialise_parser():
     parser.add_argument(
         '--include-tracks-at',
         help=(
-            'Path to a JSON file contain tracks you would like to be included.'
+            'Path to a JSON file containing tracks you would'
+            ' like to be included.'
         ),
         required=False,
     )
     parser.add_argument(
         '--tolerance-window',
         help=(
-            'Stringency for how close the playlist dureation should be tp the '
+            'Stringency for how close the playlist duration should be tp the '
             'specified time limit (does not guarantee stringency).'
         ),
         required=False,
